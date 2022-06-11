@@ -49,9 +49,20 @@ export default class MenuItem extends Component {
 
   render() {
     const { menuItems } = this.state;
+    const {
+      auth: { user, signOut },
+    } = this.props;
     return (
       <div>
-        Hi,
+        Hi, {user?.displayName}
+        <button
+          onClick={() => {
+            signOut();
+            this.props.history.push("/menu");
+          }}
+        >
+          Signout
+        </button>
         <div>
           {!!menuItems?.length &&
             menuItems.map((menu, index) => {
