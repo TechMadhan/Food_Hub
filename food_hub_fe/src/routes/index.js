@@ -17,7 +17,7 @@ const history = createBrowserHistory({ window });
 
 export const UIRoute = () => {
   const auth = useAuth();
-  const { menuItems } = useMenu();
+  const { menuItems, getMenuItems } = useMenu();
   const { addToCart, cart } = useCart();
   return (
     <HistoryRouter history={history}>
@@ -34,6 +34,7 @@ export const UIRoute = () => {
                   addToCart={addToCart}
                   cart={cart}
                   menuItems={menuItems}
+                  getMenuItems={getMenuItems}
                 />
               }
             />
@@ -42,7 +43,7 @@ export const UIRoute = () => {
               exact
               element={<Cart history={history} auth={auth} />}
             />
-           
+
             <Route path="*" element={<Navigate to="/menu" />} />
           </>
         ) : (

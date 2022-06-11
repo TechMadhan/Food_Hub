@@ -29,7 +29,6 @@ const MenuProvider = ({ children }) => {
   return (
     <MenuContext.Provider value={{ menuItems, getMenuItems }}>
       {children}
-      <button onClick={getMenuItems}>Get Menu Item</button>
     </MenuContext.Provider>
   );
 };

@@ -122,7 +122,10 @@ export default class MenuItem extends Component {
       ],
     };
   }
-
+  componentDidMount() {
+    const { getMenuItems } = this.props;
+    getMenuItems();
+  }
   itemHandler = (categoryName, item) => {
     const { addToCart } = this.props;
 
@@ -179,14 +182,6 @@ export default class MenuItem extends Component {
             <Dropdown.Item
               onClick={() => {
                 signOut();
-                this.props.history.push("/chat");
-              }}
-            >
-              Chat
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                signOut();
                 this.props.history.push("/menu");
               }}
             >
@@ -194,20 +189,22 @@ export default class MenuItem extends Component {
             </Dropdown.Item>
           </DropdownButton>
         </div>
-        <Button
-          variant="primary"
-          style={{
-            // borderRadius: "12px",
-            position: "relative",
-            left: "95%",
-          }}
-          className="btn-sm"
-          onClick={() => {
-            this.props.history.push("/cart");
-          }}
-        >
-          Cart {!!cart.length && <Badge bg="info">{cart.length}</Badge>}
-        </Button>
+        {!!cart.length && (
+          <Button
+            variant="primary"
+            style={{
+              // borderRadius: "12px",
+              position: "relative",
+              left: "95%",
+            }}
+            className="btn-sm"
+            onClick={() => {
+              this.props.history.push("/cart");
+            }}
+          >
+            Cart {!!cart.length && <Badge bg="info">{cart.length}</Badge>}
+          </Button>
+        )}
         <div
           style={{
             width: "400px",
