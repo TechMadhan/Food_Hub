@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Header from "../Header";
 import "./styles.css";
 
 export default class MenuItem extends Component {
@@ -10,14 +11,16 @@ export default class MenuItem extends Component {
           category: "Category 1",
           items: [
             {
+              id: 1,
               name: "sub category 1",
               unit: "$",
               cost: 120,
               //   offerPrice: 110,
               image: "",
-              quantity: 1,
+              quantity: 0,
             },
             {
+              id: 2,
               name: "sub category 2",
               unit: "$",
               cost: 120,
@@ -26,6 +29,7 @@ export default class MenuItem extends Component {
               quantity: 0,
             },
             {
+              id: 3,
               name: "sub category 3",
               unit: "$",
               cost: 120,
@@ -36,24 +40,127 @@ export default class MenuItem extends Component {
           ],
         },
       ],
+      cartItems: [],
+      categoryModel: [
+        {
+          name: "C1",
+          items: [
+            {
+              id:0,
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              id:1,
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              id:2,
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              id:3,
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              id:4,
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              id:5,
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+          ],
+        },
+        {
+          name: "C222",
+          items: [
+            {
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+            {
+              name: "I1",
+              cost: 120,
+              image: "",
+            },
+          ],
+        },
+      ],
     };
   }
 
-  itemHandler = (index, menuIndex, value) => {
-    let { menuItems } = this.state;
-    menuItems[index].items[menuIndex].quantity = value;
-    this.setState({
-      menuItems,
-    });
+  itemHandler = (categoryName, item) => {
+    const {addToCart} = this.props;
+
+    addToCart({
+      ...item,
+      count:1,
+      categoryName
+    })
+  };
+
+  getItemQuantity = (categoryName, itemName) => {
+    const { cartItems } = this.state;
+    const itemQuantity =
+      cartItems.map((value) => {
+        if (
+          value.name === categoryName &&
+          value?.items?.find((itemValue) => itemValue.name === itemName)
+        ) {
+          return value?.items?.find((itemValue) => itemValue.name === itemName);
+        }
+      }) || [];
+    if (!!itemQuantity?.[0]) {
+      return itemQuantity[0].quantity;
+    } else return null;
   };
 
   render() {
-    const { menuItems } = this.state;
+    const {  categoryModel } = this.state;
     const {
       auth: { user, signOut },
+      cart
     } = this.props;
     return (
       <div>
+        <Header 
+        cart={cart}
+        onCartClick={() => {
+           this.props.history.push("/cart");
+        }}/>
         Hi, {user?.displayName}
         <button
           onClick={() => {
@@ -63,106 +170,50 @@ export default class MenuItem extends Component {
         >
           Signout
         </button>
-        <div>
-          {!!menuItems?.length &&
-            menuItems.map((menu, index) => {
+        <div
+          style={{
+            width: "400px",
+            height: "100vh",
+            background: "lightgrey",
+            padding: "5px",
+          }}
+        >
+          {!!categoryModel.length &&
+            categoryModel.map((category, index) => {
               return (
-                <div key={menu.category + index}>
-                  <h1>{menu.category}</h1>
-                  <div
-                    style={{
-                      display: "flex",
-                    }}
-                  >
-                    {!!menu.items?.length &&
-                      menu.items.map((menuItem, menuIndex) => {
-                        return (
-                          <div
-                            key={menuItem.name + menuIndex}
-                            style={{
-                              border: "2px solid lightgrey",
-                              marginLeft: "10px",
-                              padding: "10px",
-                            }}
-                          >
-                            <img
-                              src={require("../../assets/images/food_sample_img.jpeg")}
-                              width={"150px"}
-                            />
-                            <h3 style={{ margin: 0 }}>{menuItem.name}</h3>
-                            <div style={{ display: "flex" }}>
-                              <p
-                                style={{
-                                  color: menuItem.offerPrice ? "red" : "green",
-                                  textDecoration: menuItem.offerPrice
-                                    ? "line-through"
-                                    : "none",
-                                }}
-                              >
-                                {menuItem.unit}
-                                {menuItem.cost}
-                              </p>
-                              {menuItem.offerPrice && (
-                                <p
-                                  style={{
-                                    color: "green",
-                                    marginLeft: "5px",
-                                  }}
-                                >
-                                  {menuItem.unit}
-                                  {menuItem.offerPrice}
-                                </p>
-                              )}
-                            </div>
-                            <p>{menuIndex.image}</p>
-                            {!menuItem.quantity ? (
-                              <button
-                                style={{
-                                  marginTop: "15px",
-                                }}
-                                onClick={() =>
-                                  this.itemHandler(index, menuIndex, 1)
-                                }
-                              >
-                                Add
-                              </button>
-                            ) : (
-                              <div
-                                style={{
-                                  display: "flex",
-                                  marginTop: "15px",
-                                  width: "50%",
-                                  justifyContent: "space-between",
-                                }}
-                              >
-                                <button
-                                  onClick={() => {
-                                    this.itemHandler(
-                                      index,
-                                      menuIndex,
-                                      menuItem.quantity - 1
-                                    );
-                                  }}
-                                >
-                                  -
-                                </button>
-                                <p>{menuItem.quantity}</p>
-                                <button
-                                  onClick={() => {
-                                    this.itemHandler(
-                                      index,
-                                      menuIndex,
-                                      menuItem.quantity + 1
-                                    );
-                                  }}
-                                >
-                                  +
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
+                <div key={category.name + index}>
+                  <h2>{category.name}</h2>
+                  <div className="item-wrapper">
+                  {category.items.map((item, itemIndex) => {
+                    const itemInCart = cart.find(i => i.id === item.id)
+                    return (
+                      <div
+                        key={item.name + itemIndex}
+                        className="item-container"
+                      >
+                       {itemInCart?.count > 0 && <div className="item-count">{itemInCart?.count}</div>}
+                        <img
+                          src={require("../../assets/images/food_sample_img.jpeg")}
+                          width={"100px"}
+                          className="item-logo"
+                        />
+                        <div className="item-details">
+                          <h4>{item.name}</h4>
+                          <p>${item.cost}</p>
+                            <button
+                             className="item-cta"
+                              onClick={() =>
+                                this.itemHandler(category.name, item, "add")
+                              }
+                            >
+                              Add
+                            </button>
+                        
+                        </div>
+                        
+                      </div>
+                    );
+                  })}
                   </div>
                 </div>
               );

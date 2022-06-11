@@ -4,21 +4,21 @@ import {
   Navigate,
   Routes,
   unstable_HistoryRouter as HistoryRouter,
-  Outlet,
 } from "react-router-dom";
 import MenuItem from "../components/MenuItems";
+import Cart from "../components/Cart";
 import WelcomeScreen from "../components/WelcomeScreen";
 import ScanQR from "../components/ScanQR";
 import ThankYou from "../components/Thankyou";
 import { createBrowserHistory } from "history";
-import { useAuth } from "../store/hooks";
-import { useMenu } from "../store/hooks/menu";
+import { useAuth, useCart, useMenu } from "../store/hooks";
 
 const history = createBrowserHistory({ window });
 
 export const UIRoute = () => {
   const auth = useAuth();
   const { menuItems } = useMenu();
+  const { addToCart, cart } = useCart();
   return (
     <HistoryRouter history={history}>
       <Routes>
@@ -28,8 +28,19 @@ export const UIRoute = () => {
               path="/menu"
               exact
               element={
-                <MenuItem history={history} auth={auth} menuItems={menuItems} />
+                <MenuItem
+                  history={history}
+                  auth={auth}
+                  addToCart={addToCart}
+                  cart={cart}
+                  menuItems={menuItems}
+                />
               }
+            />
+            <Route
+              path="/cart"
+              exact
+              element={<Cart history={history} auth={auth} />}
             />
             <Route path="*" element={<Navigate to="/menu" />} />
           </>

@@ -6,3 +6,7 @@ export const FIREBASE_CONFIG = {
   messagingSenderId: "269019547597",
   appId: "1:269019547597:web:32d2de78790e0c86646684"
 };
+
+export const STORE_KEYS = {
+  CART: 'CART'
+}
