@@ -154,6 +154,7 @@ export default class MenuItem extends Component {
     const {
       auth: { user, signOut },
       cart,
+      menuItems,
     } = this.props;
     return (
       <div>
@@ -214,10 +215,10 @@ export default class MenuItem extends Component {
             padding: "5px",
           }}
         >
-          {!!categoryModel.length &&
-            categoryModel.map((category, index) => {
+          {!!menuItems.length &&
+            menuItems.map((category, index) => {
               return (
-                <div key={category.name + index}>
+                <div key={category.title + index}>
                   <h2
                     style={{
                       textAlign: "center",
@@ -226,7 +227,7 @@ export default class MenuItem extends Component {
                       borderRadius: "12px",
                     }}
                   >
-                    {category.name}
+                    {category.title}
                   </h2>
                   <div className="item-wrapper">
                     {category.items.map((item, itemIndex) => {
@@ -244,7 +245,7 @@ export default class MenuItem extends Component {
                         >
                           <Card.Img
                             variant="top"
-                            src={require("../../assets/images/food_sample_img.jpeg")}
+                            src={item.image}
                             style={{
                               padding: "10px",
                             }}
@@ -262,7 +263,7 @@ export default class MenuItem extends Component {
                                   fontWeight: "bold",
                                 }}
                               >
-                                {item.name}
+                                {item.title}
                               </Card.Title>
                               {itemInCart?.count > 0 && (
                                 <Badge bg="info">{itemInCart?.count}</Badge>
@@ -281,7 +282,7 @@ export default class MenuItem extends Component {
                               style={{ width: "100%", borderRadius: "12px" }}
                               className="btn-sm"
                               onClick={() =>
-                                this.itemHandler(category.name, item, "add")
+                                this.itemHandler(category.title, item, "add")
                               }
                             >
                               Add

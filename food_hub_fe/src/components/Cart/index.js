@@ -44,7 +44,7 @@ const Cart = ({ history }) => {
                   />
                 </td>
                 <td>
-                  <h3 style={{ margin: 0 }}>{item.name + "alfaldf"}</h3>
+                  <h3 style={{ margin: 0 }}>{item.title}</h3>
                 </td>
                 <td>
                   <p>{item.count}</p>
