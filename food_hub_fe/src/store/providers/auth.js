@@ -7,6 +7,8 @@ import { FIREBASE_CONFIG } from "../../config";
 const AuthProvider = ({ children }) => {
   const provider = React.useRef(new firebase.auth.GoogleAuthProvider()).current;
   const [user, setUser] = React.useState(null);
+  const app = React.useRef(firebase.initializeApp(FIREBASE_CONFIG)).current;
+  const db = React.useRef(firebase.firestore()).current;
 
   React.useEffect(() => {
     initilize();
@@ -59,7 +61,6 @@ const AuthProvider = ({ children }) => {
 
   const initilize = () => {
     console.log("###INIT FIREBASE");
-    const app = firebase.initializeApp(FIREBASE_CONFIG);
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
@@ -70,7 +71,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, signInAdmin, signOut, signInUser }}>
+    <AuthContext.Provider
+      value={{ db, app, user, signInAdmin, signOut, signInUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -12,11 +12,13 @@ import ScanQR from "../components/ScanQR";
 import ThankYou from "../components/Thankyou";
 import { createBrowserHistory } from "history";
 import { useAuth } from "../store/hooks";
+import { useMenu } from "../store/hooks/menu";
 
 const history = createBrowserHistory({ window });
 
 export const UIRoute = () => {
   const auth = useAuth();
+  const { menuItems } = useMenu();
   return (
     <HistoryRouter history={history}>
       <Routes>
@@ -25,7 +27,9 @@ export const UIRoute = () => {
             <Route
               path="/menu"
               exact
-              element={<MenuItem history={history} auth={auth} />}
+              element={
+                <MenuItem history={history} auth={auth} menuItems={menuItems} />
+              }
             />
             <Route path="*" element={<Navigate to="/menu" />} />
           </>
