@@ -34,6 +34,7 @@ export const UIRoute = () => {
               exact
               element={<Cart history={history} auth={auth} />}
             />
+           
             <Route path="*" element={<Navigate to="/menu" />} />
           </>
         ) : (

@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth } from "../../store/hooks";
+import { Button } from "react-bootstrap";
 import "./style.css";
 
 const WelcomeScreen = ({ history }) => {
@@ -11,7 +12,7 @@ const WelcomeScreen = ({ history }) => {
   };
   return (
     <div>
-      <h3
+      <h2
         style={{
           padding: "20px",
           margin: "0px",
@@ -20,7 +21,7 @@ const WelcomeScreen = ({ history }) => {
         }}
       >
         Welcome to Food Hub
-      </h3>
+      </h2>
       <div
         style={{
           textAlign: "center",
@@ -28,9 +29,9 @@ const WelcomeScreen = ({ history }) => {
       >
         <p>Kindly enter your details to get your personalized menu</p>
 
-        <button onClick={onSubmitHandler} className="submitBtn">
+        <Button onClick={onSubmitHandler} className="submitBtn">
           Sign-in with Google
-        </button>
+        </Button>
       </div>
     </div>
   );

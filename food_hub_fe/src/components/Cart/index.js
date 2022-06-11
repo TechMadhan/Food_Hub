@@ -1,9 +1,11 @@
 import React from "react";
 import Header from "../Header";
-import {useCart} from '../../store/hooks'
+import "./style.css";
+import { useCart } from "../../store/hooks";
+import { Table, Button } from "react-bootstrap";
 
 const Cart = ({ history }) => {
-  const {cart,removeFromCart} = useCart()
+  const { cart, removeFromCart } = useCart();
   return (
     <div>
       <Header
@@ -12,23 +14,65 @@ const Cart = ({ history }) => {
           history.back();
         }}
       />
-      {cart?.map(item => {
-        return <div style={{
-          display:'flex',
-          flexDirection:'row',
-          justifyContent:'space-around',
-          borderWidth:'2px',
-          borderStyle:'solid',
-          borderColor:'black',
-          marginBottom:'16px'
-        }}>
-          <div>{item.name}</div>
-        <div>{item.count}</div>
-        <div>{item.categoryName}</div>
-        <div onClick={() => {
-          removeFromCart(item.id)
-        }}>DELETE</div></div>
-      })}
+      <Table
+        striped
+        bordered
+        hover
+        style={{
+          textAlign: "center",
+          width: "100%",
+          padding: "5px",
+        }}
+      >
+        <thead>
+          <tr>
+            <th colSpan={2}>Item</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cart?.map((item) => {
+            return (
+              <tr>
+                <td>
+                  <img
+                    src={require("../../assets/images/food_sample_img.jpeg")}
+                    width={"70px"}
+                    // className="item-logo"
+                  />
+                </td>
+                <td>
+                  <h3 style={{ margin: 0 }}>{item.name + "alfaldf"}</h3>
+                </td>
+                <td>
+                  <p>{item.count}</p>
+                </td>
+                <td>
+                  <div>{item.categoryName}</div>
+                </td>
+                <td>
+                  <div
+                    onClick={() => {
+                      removeFromCart(item.id);
+                    }}
+                  >
+                    Delete
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+      <Button
+        onClick={() => {
+          //create order
+        }}
+      >
+        Place your Order
+      </Button>
     </div>
   );
 };

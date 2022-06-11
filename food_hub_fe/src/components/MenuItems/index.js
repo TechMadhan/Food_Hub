@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "../Header";
+import { Card, Button, Badge, DropdownButton, Dropdown } from "react-bootstrap";
 import "./styles.css";
 
 export default class MenuItem extends Component {
@@ -46,37 +47,37 @@ export default class MenuItem extends Component {
           name: "C1",
           items: [
             {
-              id:0,
+              id: 0,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
-              id:1,
+              id: 1,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
-              id:2,
+              id: 2,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
-              id:3,
+              id: 3,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
-              id:4,
+              id: 4,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
-              id:5,
+              id: 5,
               name: "I1",
               cost: 120,
               image: "",
@@ -123,13 +124,13 @@ export default class MenuItem extends Component {
   }
 
   itemHandler = (categoryName, item) => {
-    const {addToCart} = this.props;
+    const { addToCart } = this.props;
 
     addToCart({
       ...item,
-      count:1,
-      categoryName
-    })
+      count: 1,
+      categoryName,
+    });
   };
 
   getItemQuantity = (categoryName, itemName) => {
@@ -149,32 +150,67 @@ export default class MenuItem extends Component {
   };
 
   render() {
-    const {  categoryModel } = this.state;
+    const { categoryModel } = this.state;
     const {
       auth: { user, signOut },
-      cart
+      cart,
     } = this.props;
     return (
       <div>
-        <Header 
-        cart={cart}
-        onCartClick={() => {
-           this.props.history.push("/cart");
-        }}/>
-        Hi, {user?.displayName}
-        <button
-          onClick={() => {
-            signOut();
-            this.props.history.push("/menu");
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
-          Signout
-        </button>
+          <Header
+            cart={cart}
+            onCartClick={() => {
+              this.props.history.push("/cart");
+            }}
+          />
+          <DropdownButton
+            // id="dropdown-basic-button"
+            className="secondary btn-sm"
+            title={`${user?.displayName}`}
+            style={{ position: "relative", left: 60, top: 10 }}
+          >
+            <Dropdown.Item
+              onClick={() => {
+                signOut();
+                this.props.history.push("/chat");
+              }}
+            >
+              Chat
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                signOut();
+                this.props.history.push("/menu");
+              }}
+            >
+              Sign out
+            </Dropdown.Item>
+          </DropdownButton>
+        </div>
+        <Button
+          variant="primary"
+          style={{
+            // borderRadius: "12px",
+            position: "relative",
+            left: "95%",
+          }}
+          className="btn-sm"
+          onClick={() => {
+            this.props.history.push("/cart");
+          }}
+        >
+          Cart {!!cart.length && <Badge bg="info">{cart.length}</Badge>}
+        </Button>
         <div
           style={{
             width: "400px",
-            height: "100vh",
-            background: "lightgrey",
+            // height: "100vh",
             padding: "5px",
           }}
         >
@@ -182,38 +218,78 @@ export default class MenuItem extends Component {
             categoryModel.map((category, index) => {
               return (
                 <div key={category.name + index}>
-                  <h2>{category.name}</h2>
+                  <h2
+                    style={{
+                      textAlign: "center",
+                      background: "#cee0fa",
+                      padding: "5px",
+                      borderRadius: "12px",
+                    }}
+                  >
+                    {category.name}
+                  </h2>
                   <div className="item-wrapper">
-                  {category.items.map((item, itemIndex) => {
-                    const itemInCart = cart.find(i => i.id === item.id)
-                    return (
-                      <div
-                        key={item.name + itemIndex}
-                        className="item-container"
-                      >
-                       {itemInCart?.count > 0 && <div className="item-count">{itemInCart?.count}</div>}
-                        <img
-                          src={require("../../assets/images/food_sample_img.jpeg")}
-                          width={"100px"}
-                          className="item-logo"
-                        />
-                        <div className="item-details">
-                          <h4>{item.name}</h4>
-                          <p>${item.cost}</p>
-                            <button
-                             className="item-cta"
+                    {category.items.map((item, itemIndex) => {
+                      const itemInCart = cart.find((i) => i.id === item.id);
+                      return (
+                        <Card
+                          style={{
+                            width: "43%",
+                            margin: "10px",
+                            padding: "5px",
+                            borderRadius: "12px",
+                            background: "#eef5ff",
+                            boxShadow: "inset 0 0 5px #eef5ff",
+                          }}
+                        >
+                          <Card.Img
+                            variant="top"
+                            src={require("../../assets/images/food_sample_img.jpeg")}
+                            style={{
+                              padding: "10px",
+                            }}
+                          />
+                          <Card.Body>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Card.Title
+                                style={{
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {item.name}
+                              </Card.Title>
+                              {itemInCart?.count > 0 && (
+                                <Badge bg="info">{itemInCart?.count}</Badge>
+                              )}
+                            </div>
+                            <Card.Text
+                              style={{
+                                color: "green",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              ${item.cost}
+                            </Card.Text>
+                            <Button
+                              variant="primary"
+                              style={{ width: "100%", borderRadius: "12px" }}
+                              className="btn-sm"
                               onClick={() =>
                                 this.itemHandler(category.name, item, "add")
                               }
                             >
                               Add
-                            </button>
-                        
-                        </div>
-                        
-                      </div>
-                    );
-                  })}
+                            </Button>
+                          </Card.Body>
+                        </Card>
+                      );
+                    })}
                   </div>
                 </div>
               );
