@@ -167,9 +167,21 @@ export default class MenuItem extends Component {
 
   render() {
     const { menuItems, cartItems, categoryModel } = this.state;
+    const {
+      auth: { user, signOut },
+    } = this.props;
     return (
       <div>
         <Header/>
+        Hi, {user?.displayName}
+        <button
+          onClick={() => {
+            signOut();
+            this.props.history.push("/menu");
+          }}
+        >
+          Signout
+        </button>
         <div
           style={{
             width: "400px",
