@@ -2,6 +2,7 @@ import { AuthContext } from "../context";
 import React from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import "firebase/compat/firestore";
 import { FIREBASE_CONFIG } from "../../config";
 
 const AuthProvider = ({ children }) => {
@@ -61,6 +62,7 @@ const AuthProvider = ({ children }) => {
 
   const initilize = () => {
     console.log("###INIT FIREBASE");
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);

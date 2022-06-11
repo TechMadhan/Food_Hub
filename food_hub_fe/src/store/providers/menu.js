@@ -1,7 +1,5 @@
 import { MenuContext } from "../context";
 import React, { useState } from "react";
-import "firebase/compat/auth";
-
 import { useAuth } from "../hooks";
 
 const MenuProvider = ({ children }) => {
@@ -25,6 +23,7 @@ const MenuProvider = ({ children }) => {
         items,
       });
     }
+    console.log("###", arr);
     setMenuItems(arr);
   };
   return (
