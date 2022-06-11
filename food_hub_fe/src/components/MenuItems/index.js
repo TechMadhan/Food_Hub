@@ -46,31 +46,37 @@ export default class MenuItem extends Component {
           name: "C1",
           items: [
             {
+              id:0,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
+              id:1,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
+              id:2,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
+              id:3,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
+              id:4,
               name: "I1",
               cost: 120,
               image: "",
             },
             {
+              id:5,
               name: "I1",
               cost: 120,
               image: "",
@@ -116,37 +122,14 @@ export default class MenuItem extends Component {
     };
   }
 
-  itemHandler = (categoryName, item, type) => {
-    let { cartItems } = this.state;
-    const cartIndex = cartItems.findIndex(
-      (value) => value.name === categoryName
-    );
-    if (cartIndex >= 0) {
-      const itemIndex = cartItems[cartIndex].items?.findIndex(
-        (value) => value.id === item.id
-      );
-      if (itemIndex >= 0) {
-        cartItems[cartIndex].items[itemIndex].quantity =
-          type === "newAdd"
-            ? 1
-            : type === "add"
-            ? cartItems[cartIndex].items[itemIndex].quantity + 1
-            : cartItems[cartIndex].items[itemIndex].quantity - 1;
-      } else {
-        cartItems[cartIndex].items.push(item);
-      }
-    } else {
-      cartItems.push({
-        name: categoryName,
-        items: [
-          {
-            ...item,
-            quantity: 1,
-          },
-        ],
-      });
-    }
-    this.setState({ cartItems });
+  itemHandler = (categoryName, item) => {
+    const {addToCart} = this.props;
+
+    addToCart({
+      ...item,
+      count:1,
+      categoryName
+    })
   };
 
   getItemQuantity = (categoryName, itemName) => {
@@ -166,13 +149,18 @@ export default class MenuItem extends Component {
   };
 
   render() {
-    const { menuItems, cartItems, categoryModel } = this.state;
+    const {  categoryModel } = this.state;
     const {
       auth: { user, signOut },
+      cart
     } = this.props;
     return (
       <div>
-        <Header/>
+        <Header 
+        cart={cart}
+        onCartClick={() => {
+           this.props.history.push("/cart");
+        }}/>
         Hi, {user?.displayName}
         <button
           onClick={() => {
@@ -197,12 +185,13 @@ export default class MenuItem extends Component {
                   <h2>{category.name}</h2>
                   <div className="item-wrapper">
                   {category.items.map((item, itemIndex) => {
+                    const itemInCart = cart.find(i => i.id === item.id)
                     return (
                       <div
                         key={item.name + itemIndex}
                         className="item-container"
                       >
-                       {this.getItemQuantity(category.name, item.name) > 0 && <div className="item-count">{this.getItemQuantity(category.name, item.name)}</div>}
+                       {itemInCart?.count > 0 && <div className="item-count">{itemInCart?.count}</div>}
                         <img
                           src={require("../../assets/images/food_sample_img.jpeg")}
                           width={"100px"}

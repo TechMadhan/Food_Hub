@@ -2,13 +2,16 @@ import React from 'react'
 import './style.css'
 
 const Header = ({
-    back = false
+    back = false,
+    onCartClick = () => {},
+    onBackClick = () => {},
+    cart
 }) => {
   return (
     <div className='header'>
-        {back ? <div>back</div> : <div>logo</div>}
-        {!back && <div>
-            cart
+        {back ? <div onClick={onBackClick}>back</div> : <div>logo</div>}
+        {!back && <div onClick={onCartClick}>
+            cart-{cart.length}
             </div>}
     </div>
   )
