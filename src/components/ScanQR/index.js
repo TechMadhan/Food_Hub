@@ -37,7 +37,6 @@ const ScanQR = (props) => {
               </p>
               <p style={{ textAlign: "center", margin: 0 }}>
                 Total Seats {value.count}
-                {console.log("value.ref", value)}
               </p>
               <QRCode
                 value={value.ref}

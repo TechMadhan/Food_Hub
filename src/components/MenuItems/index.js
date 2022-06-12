@@ -14,9 +14,9 @@ export default class MenuItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuItems: [],
-      cartItems: [],
-      categoryModel: [],
+      // menuItems: [],
+      // cartItems: [],
+      // categoryModel: [],
     };
   }
   componentDidMount() {
@@ -25,7 +25,6 @@ export default class MenuItem extends Component {
   }
   itemHandler = (categoryName, item) => {
     const { addToCart } = this.props;
-
     addToCart({
       ...item,
       count: 1,
@@ -132,7 +131,7 @@ export default class MenuItem extends Component {
                         const itemInCart = cart.find((i) => i.id === item.id);
                         return (
                           <Card
-                            key={(item.title = itemIndex)}
+                            key={item.title}
                             style={{
                               width: "43%",
                               margin: "10px",

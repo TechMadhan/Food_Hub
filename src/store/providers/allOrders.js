@@ -29,11 +29,8 @@ const AllOrderProvider = ({ children }) => {
       {
         orderStatus: status,
       },
-      () => {
-        console.log("##");
-      }
+      () => {}
     );
-    console.log(or);
   };
 
   return (

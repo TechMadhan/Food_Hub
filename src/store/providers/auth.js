@@ -29,10 +29,9 @@ const AuthProvider = ({ children }) => {
 
       // Signed in
       var user = userCredential.user;
-      console.log("####USER ", userCredential);
       return user;
     } catch (err) {
-      console.log("###ERR", err);
+      // console.log("###ERR", err);
     }
   };
 
@@ -49,7 +48,7 @@ const AuthProvider = ({ children }) => {
       var user = result.user;
       // ...
     } catch (err) {
-      console.log("###ERR ", err);
+      // console.log("###ERR ", err);
     }
   };
 
@@ -57,12 +56,12 @@ const AuthProvider = ({ children }) => {
     try {
       await firebase.auth().signOut();
     } catch (err) {
-      console.log("###ERR ", err.message);
+      // console.log("###ERR ", err.message);
     }
   };
 
   const initilize = () => {
-    console.log("###INIT FIREBASE");
+    // console.log("###INIT FIREBASE");
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {

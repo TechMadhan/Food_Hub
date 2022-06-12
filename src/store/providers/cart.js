@@ -22,7 +22,7 @@ const CartProvider = ({ children }) => {
       setCart(nextItems);
       localStorage.setItem(STORE_KEYS.CART, JSON.stringify(nextItems));
     } catch (err) {
-      console.log("CLEAR STOARE ", err.message);
+      // console.log("CLEAR STOARE ", err.message);
       localStorage.setItem(STORE_KEYS.CART, JSON.stringify([]));
       setCart([]);
     }
