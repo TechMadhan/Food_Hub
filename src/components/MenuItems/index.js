@@ -174,7 +174,7 @@ export default class MenuItem extends Component {
                                   fontWeight: "bold",
                                 }}
                               >
-                                ${item.cost}
+                                ₹{item.cost}
                               </Card.Text>
                               <Button
                                 variant="primary"

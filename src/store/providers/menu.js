@@ -37,7 +37,6 @@ const MenuProvider = ({ children }) => {
       const dd = dineTable.data();
       arr.push({
         ...dd,
-        ref: dineTable.id,
       });
     }
     console.log("###", arr);
@@ -46,15 +45,17 @@ const MenuProvider = ({ children }) => {
 
   const updateDineTable = async () => {
     const dineTableRef = db.collection("dinetables");
-    localStorage.getItem("currentTable") &&
-      dineTableRef.doc(localStorage.getItem("currentTable")).set(
-        {
-          status: "booked",
-        },
-        {
-          merge: true,
-        }
-      );
+    const currentIndex = -1;
+    dineTables.filter((value, index) => {
+      if (value.id === localStorage.getItem("currentTable")) {
+        currentIndex = index;
+      }
+    });
+    currentIndex >= 0 &&
+      dineTableRef.doc().set({
+        ...dineTables[currentIndex],
+        status: "booked",
+      });
   };
 
   return (
