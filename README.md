@@ -28,8 +28,17 @@ Dillinger uses a number of open source projects to work properly:
 
 ## Few Screen Shots of the Application
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![alt text](https://github.com/TechMadhan/Food_Hub/blob/master/src/assets/public/1.png))
 
+![alt text]([https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true](https://github.com/TechMadhan/Food_Hub/blob/master/src/assets/public/2.png))
+
+![alt text]([https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true](https://github.com/TechMadhan/Food_Hub/blob/master/src/assets/public/3.png))
+
+![alt text]([https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true](https://github.com/TechMadhan/Food_Hub/blob/master/src/assets/public/4.png))
+
+![alt text]([https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true](https://github.com/TechMadhan/Food_Hub/blob/master/src/assets/public/5.png))
+
+![alt text]([https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true](https://github.com/TechMadhan/Food_Hub/blob/master/src/assets/public/6.png))
 ## License
 
 MIT
