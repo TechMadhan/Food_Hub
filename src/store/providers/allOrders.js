@@ -22,8 +22,22 @@ const AllOrderProvider = ({ children }) => {
     });
   }, [real_db, user]);
 
+  const changeStatus = async (order_details, status) => {
+    const orderId = `${order_details.user}/${order_details.orderId}`;
+    const orders = real_db.ref(orderId);
+    const or = await orders.set(
+      {
+        orderStatus: status,
+      },
+      () => {
+        console.log("##");
+      }
+    );
+    console.log(or);
+  };
+
   return (
-    <AllOrderContext.Provider value={{ allOrders }}>
+    <AllOrderContext.Provider value={{ allOrders, changeStatus }}>
       {children}
     </AllOrderContext.Provider>
   );

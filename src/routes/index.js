@@ -23,6 +23,7 @@ export const UIRoute = () => {
   const auth = useAuth();
   const { menuItems, getMenuItems } = useMenu();
   const { addToCart, cart } = useCart();
+
   return (
     <HistoryRouter history={history}>
       <Routes>
@@ -37,6 +38,7 @@ export const UIRoute = () => {
                 </AllOrderProvider>
               }
             />
+            <Route path="*" element={<Navigate to="/dashboard" />} />
           </>
         ) : auth.user ? (
           <>
@@ -74,13 +76,12 @@ export const UIRoute = () => {
               path="/welcome/:tableID"
               element={<WelcomeScreen history={history} />}
             />
-            <Route path="/scan-qr" element={<ScanQR />} />
-            <Route path="*" element={<Navigate to="/scan-qr" />} />
           </>
         )}
         <Route path="/admin" element={<AdminLogin history={history} />} />
+        <Route path="/scan-qr" element={<ScanQR />} />
         <Route path="/thank-you" element={<ThankYou />} />
-        <Route path="*" element={<Navigate to="/thank-you" />} />
+        <Route path="*" element={<Navigate to="/scan-qr" />} />
       </Routes>
     </HistoryRouter>
   );
