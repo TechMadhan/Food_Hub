@@ -5,27 +5,29 @@ import { useAuth } from "../hooks";
 const MenuProvider = ({ children }) => {
   const [menuItems, setMenuItems] = useState([]);
   const [dineTables, setDineTables] = useState([]);
+  const alreadyFetching = React.useRef(false);
   const { db } = useAuth();
-  const getMenuItems = async () => {
-    const categoryRef = db.collection("categories");
-    const itemsRef = db.collection("items");
-    const ss = await categoryRef.get();
-    let arr = [];
+  const categoryRef = db.collection("categories");
+  const itemsRef = db.collection("items");
 
-    for (let category of ss.docs) {
-      const dd = category.data();
-      let items = [];
-      for (let iii of dd.items) {
-        const data = (await itemsRef.doc(iii.id).get()).data();
-        items.push(data);
+  const getMenuItems = async () => {
+    const ss = await categoryRef.get();
+    const arr = [];
+
+    for (let i = 0; i < ss.docs.length; i++) {
+      const docsData = ss.docs[i].data();
+      const abc = [];
+      for (let j = 0; j < docsData.items.length; j++) {
+        const data = (await itemsRef.doc(docsData.items[j].id).get()).data();
+        abc.push({ ...data });
       }
       arr.push({
-        ...dd,
-        items,
+        ...docsData,
+        items: [...abc],
       });
     }
-    console.log("###", arr);
-    setMenuItems(arr);
+    setMenuItems([...arr]);
+    alreadyFetching.current = false;
   };
 
   const getDineTables = async () => {
@@ -39,7 +41,7 @@ const MenuProvider = ({ children }) => {
         ...dd,
       });
     }
-    console.log("###", arr);
+    // console.log("###", arr);
     setDineTables(arr);
   };
 

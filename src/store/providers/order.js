@@ -25,7 +25,7 @@ const CartProvider = ({ children }) => {
       const orders = real_db.ref(orderId);
       orders.push(order_details);
     } catch (err) {
-      console.log("##W ", err.message);
+      // console.log("##W ", err.message);
     }
   };
 
