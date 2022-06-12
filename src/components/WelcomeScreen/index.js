@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "../../store/hooks";
 import { Button } from "react-bootstrap";
 import "./style.css";
+import { useParams } from "react-router-dom";
 
-const WelcomeScreen = ({ history }) => {
+const WelcomeScreen = ({ history, ...restProps }) => {
   const { signInUser } = useAuth();
+  const params = useParams();
+
+  useEffect(() => {
+    if (params?.tableID) {
+      localStorage.setItem("currentTable", params.tableID);
+    }
+  }, []);
 
   const onSubmitHandler = () => {
     signInUser();
@@ -24,10 +32,9 @@ const WelcomeScreen = ({ history }) => {
       </h2>
       <div
         style={{
-          textAlign: "center",
         }}
       >
-        <p>Kindly enter your details to get your personalized menu</p>
+        <p>Kindly sign in to get your personalized menu</p>
 
         <Button onClick={onSubmitHandler} className="submitBtn">
           Sign-in with Google

@@ -2,7 +2,19 @@ import React from "react";
 import { MenuContext } from "../context";
 
 export const useMenu = () => {
-  const { menuItems, getMenuItems } = React.useContext(MenuContext);
+  const {
+    menuItems,
+    getMenuItems,
+    dineTables,
+    getDineTables,
+    updateDineTable,
+  } = React.useContext(MenuContext);
 
-  return { menuItems, getMenuItems };
+  return {
+    menuItems,
+    getMenuItems,
+    dineTables,
+    getDineTables,
+    updateDineTable,
+  };
 };
