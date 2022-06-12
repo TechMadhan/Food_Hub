@@ -33,24 +33,7 @@ export default class MenuItem extends Component {
     });
   };
 
-  getItemQuantity = (categoryName, itemName) => {
-    const { cartItems } = this.state;
-    const itemQuantity =
-      cartItems.map((value) => {
-        if (
-          value.name === categoryName &&
-          value?.items?.find((itemValue) => itemValue.name === itemName)
-        ) {
-          return value?.items?.find((itemValue) => itemValue.name === itemName);
-        }
-      }) || [];
-    if (!!itemQuantity?.[0]) {
-      return itemQuantity[0].quantity;
-    } else return null;
-  };
-
   render() {
-    const { categoryModel } = this.state;
     const {
       auth: { user, signOut },
       cart,
