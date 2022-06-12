@@ -3,9 +3,10 @@ import Header from "../Header";
 import "./style.css";
 import { useAuth, useCart, useOrder } from "../../store/hooks";
 import { Table, Button } from "react-bootstrap";
+import { ORDER_STATUS } from "../../config";
 
 const Cart = ({ history }) => {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, clearCart } = useCart();
   const { user } = useAuth();
   const { order, createOrder } = useOrder();
   return (
@@ -16,20 +17,6 @@ const Cart = ({ history }) => {
           history.back();
         }}
       />
-      <div> {JSON.stringify(order, null, "  ")}</div>
-      <button
-        onClick={() =>
-          createOrder(
-            {
-              user: user.uid,
-              items: cart,
-            },
-            12
-          )
-        }
-      >
-        ORDER
-      </button>
       <Table
         striped
         bordered
@@ -84,7 +71,20 @@ const Cart = ({ history }) => {
       </Table>
       <Button
         onClick={() => {
-          //create order
+          createOrder(
+            {
+              user: user?.uid,
+              orderStatus: ORDER_STATUS.ORDERED,
+              items: cart,
+              total: cart?.reduce(
+                (total, current) => total + current.cost * current.count,
+                0
+              ),
+            },
+            12
+          );
+          history.push("/order");
+          clearCart();
         }}
       >
         Place your Order

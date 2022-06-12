@@ -181,6 +181,13 @@ export default class MenuItem extends Component {
           >
             <Dropdown.Item
               onClick={() => {
+                this.props.history.push("/order");
+              }}
+            >
+              My Orders
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
                 signOut();
                 this.props.history.push("/menu");
               }}
