@@ -10,6 +10,7 @@ import Cart from "../components/Cart";
 import WelcomeScreen from "../components/WelcomeScreen";
 import ScanQR from "../components/ScanQR";
 import ThankYou from "../components/Thankyou";
+import Order from "../components/Order";
 import { createBrowserHistory } from "history";
 import { useAuth, useCart, useMenu } from "../store/hooks";
 
@@ -42,6 +43,12 @@ export const UIRoute = () => {
               path="/cart"
               exact
               element={<Cart history={history} auth={auth} />}
+            />
+
+            <Route
+              path="/order"
+              exact
+              element={<Order history={history} auth={auth} />}
             />
 
             <Route path="*" element={<Navigate to="/menu" />} />

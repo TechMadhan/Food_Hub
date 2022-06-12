@@ -1,11 +1,13 @@
 import React from "react";
 import Header from "../Header";
 import "./style.css";
-import { useCart } from "../../store/hooks";
+import { useAuth, useCart, useOrder } from "../../store/hooks";
 import { Table, Button } from "react-bootstrap";
 
 const Cart = ({ history }) => {
   const { cart, removeFromCart } = useCart();
+  const { user } = useAuth();
+  const { order, createOrder } = useOrder();
   return (
     <div>
       <Header
@@ -14,6 +16,20 @@ const Cart = ({ history }) => {
           history.back();
         }}
       />
+      <div> {JSON.stringify(order, null, "  ")}</div>
+      <button
+        onClick={() =>
+          createOrder(
+            {
+              user: user.uid,
+              items: cart,
+            },
+            12
+          )
+        }
+      >
+        ORDER
+      </button>
       <Table
         striped
         bordered

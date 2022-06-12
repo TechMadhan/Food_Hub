@@ -3,6 +3,7 @@ import React from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import "firebase/compat/database";
 import { FIREBASE_CONFIG } from "../../config";
 
 const AuthProvider = ({ children }) => {
@@ -10,6 +11,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = React.useState(null);
   const app = React.useRef(firebase.initializeApp(FIREBASE_CONFIG)).current;
   const db = React.useRef(firebase.firestore()).current;
+  var real_db = React.useRef(firebase.database()).current;
 
   React.useEffect(() => {
     initilize();
@@ -74,7 +76,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ db, app, user, signInAdmin, signOut, signInUser }}
+      value={{ db, real_db, app, user, signInAdmin, signOut, signInUser }}
     >
       {children}
     </AuthContext.Provider>
