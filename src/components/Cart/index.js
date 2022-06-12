@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../Header";
 import "./style.css";
-import { useAuth, useCart, useOrder } from "../../store/hooks";
+import { useAuth, useCart, useMenu, useOrder } from "../../store/hooks";
 import { Table, Button } from "react-bootstrap";
 import { ORDER_STATUS } from "../../config";
 
@@ -9,6 +9,7 @@ const Cart = ({ history }) => {
   const { cart, removeFromCart, clearCart } = useCart();
   const { user } = useAuth();
   const { order, createOrder } = useOrder();
+  const { updateDineTable } = useMenu();
   return (
     <div>
       <Header
@@ -76,6 +77,7 @@ const Cart = ({ history }) => {
               user: user?.uid,
               orderStatus: ORDER_STATUS.ORDERED,
               items: cart,
+              tableId: localStorage.getItem("currentTable"),
               total: cart?.reduce(
                 (total, current) => total + current.cost * current.count,
                 0
@@ -84,6 +86,7 @@ const Cart = ({ history }) => {
             12
           );
           history.push("/order");
+          updateDineTable();
           clearCart();
         }}
       >
