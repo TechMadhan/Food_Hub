@@ -8,7 +8,8 @@ const CartProvider = ({ children }) => {
   const { real_db, user } = useAuth();
 
   React.useEffect(() => {
-    if (!real_db) return;
+    if (!user || !real_db) return;
+
     real_db.ref(user?.uid).on("value", (snapshot) => {
       const data = snapshot.val();
       const active_orders = Object.values(data || {}).filter(
@@ -16,7 +17,7 @@ const CartProvider = ({ children }) => {
       );
       setOrders(active_orders);
     });
-  }, [real_db]);
+  }, [real_db, user]);
 
   const createOrder = async (order_details, table) => {
     try {
