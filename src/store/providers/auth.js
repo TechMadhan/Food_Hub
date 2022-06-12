@@ -23,7 +23,6 @@ const AuthProvider = ({ children }) => {
       //   const userCredential = await firebase
       //     .auth()
       //     .createUserWithEmailAndPassword(email, password);
-
       const userCredential = await firebase
         .auth()
         .signInWithEmailAndPassword(email, password);

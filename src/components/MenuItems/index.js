@@ -4,124 +4,6 @@ import { Card, Button, Badge, DropdownButton, Dropdown } from "react-bootstrap";
 import "./styles.css";
 
 export default class MenuItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      menuItems: [
-        {
-          category: "Category 1",
-          items: [
-            {
-              id: 1,
-              name: "sub category 1",
-              unit: "$",
-              cost: 120,
-              //   offerPrice: 110,
-              image: "",
-              quantity: 0,
-            },
-            {
-              id: 2,
-              name: "sub category 2",
-              unit: "$",
-              cost: 120,
-              //   offerPrice: 110,
-              image: "",
-              quantity: 0,
-            },
-            {
-              id: 3,
-              name: "sub category 3",
-              unit: "$",
-              cost: 120,
-              offerPrice: 110,
-              image: "",
-              quantity: 0,
-            },
-          ],
-        },
-      ],
-      cartItems: [],
-      categoryModel: [
-        {
-          name: "C1",
-          items: [
-            {
-              id: 0,
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              id: 1,
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              id: 2,
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              id: 3,
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              id: 4,
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              id: 5,
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-          ],
-        },
-        {
-          name: "C222",
-          items: [
-            {
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-            {
-              name: "I1",
-              cost: 120,
-              image: "",
-            },
-          ],
-        },
-      ],
-    };
-  }
   componentDidMount() {
     const { getMenuItems } = this.props;
     getMenuItems();
@@ -136,24 +18,7 @@ export default class MenuItem extends Component {
     });
   };
 
-  getItemQuantity = (categoryName, itemName) => {
-    const { cartItems } = this.state;
-    const itemQuantity =
-      cartItems.map((value) => {
-        if (
-          value.name === categoryName &&
-          value?.items?.find((itemValue) => itemValue.name === itemName)
-        ) {
-          return value?.items?.find((itemValue) => itemValue.name === itemName);
-        }
-      }) || [];
-    if (!!itemQuantity?.[0]) {
-      return itemQuantity[0].quantity;
-    } else return null;
-  };
-
   render() {
-    const { categoryModel } = this.state;
     const {
       auth: { user, signOut },
       cart,
