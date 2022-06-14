@@ -1,0 +1,15 @@
+.admin-order {
+  border: 2px solid black;
+  border-radius: 8px;
+  margin: 16px;
+  padding: 8px;
+}
+
+.status-cta {
+  border: 1px solid black;
+  padding: 4px 8px;
+}
+
+.status-wrapper {
+  display: flex;
+}
